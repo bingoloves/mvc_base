@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tabbar_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <com.learn.base.layout.Tabbar
+            android:id="@+id/bottom_nav_item1"
+            app:tabImage="@drawable/tabbar1_default"
+            app:tabSelectedImage="@drawable/tabbar1_selected"
+            app:tabColor="#2296FF"
+            app:tabTitle="首页"
+            android:layout_width="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <com.learn.base.layout.Tabbar
+            android:id="@+id/bottom_nav_item2"
+            app:tabImage="@drawable/tabbar2_default"
+            app:tabSelectedImage="@drawable/tabbar2_selected"
+            app:tabColor="#2296FF"
+            app:tabTitle="商店"
+            android:layout_width="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <com.learn.base.layout.Tabbar
+            android:id="@+id/bottom_nav_item3"
+            app:tabImage="@drawable/tabbar3_default"
+            app:tabSelectedImage="@drawable/tabbar3_selected"
+            app:tabColor="#2296FF"
+            app:tabTitle="新闻"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <com.learn.base.layout.Tabbar
+            android:id="@+id/bottom_nav_item4"
+            app:tabImage="@drawable/tabbar4_default"
+            app:tabSelectedImage="@drawable/tabbar4_selected"
+            app:tabColor="#2296FF"
+            app:tabTitle="历史"
+            android:layout_width="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        <com.learn.base.layout.Tabbar
+            android:id="@+id/bottom_nav_item5"
+            app:tabImage="@drawable/tabbar5_default"
+            app:tabSelectedImage="@drawable/tabbar5_selected"
+            app:tabColor="#2296FF"
+            app:tabTitle="我的"
+            android:layout_width="0dp"
+            android:layout_marginTop="14dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义头部导航栏视图-->
+    <declare-styleable name="NavigationBar">
+        <attr name="nav_bar_left_image" format="reference" /><!--左边图片-->
+        <attr name="nav_bar_left_title" format="string|reference" /><!--左边标题-->
+        <attr name="nav_bar_right_image" format="reference" /><!--右边图片-->
+        <attr name="nav_bar_right_title" format="string|reference" /><!--右边标题-->
+        <attr name="nav_bar_title" format="string|reference"/>
+        <attr name="nav_bar_bg" format="color|integer" />
+    </declare-styleable>
+    <!--仿微信底部tab-->
+    <declare-styleable name="TabView">
+        <attr name="tabColor" format="color|integer" />
+        <attr name="tabImage" format="reference" />
+        <attr name="tabSelectedImage" format="reference" />
+        <attr name="tabTitle" format="string|reference" />
+    </declare-styleable>
+</resources>
