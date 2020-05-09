@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.learn.base.toast.ToastUtil;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -84,6 +87,9 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initView(View root);
     protected abstract void initListener();
 
+    protected void toast(String msg){
+        ToastUtil.showAtCenter(getContext(),msg);
+    }
     /**
      * fragment第一次可见的时候回调此方法
      */

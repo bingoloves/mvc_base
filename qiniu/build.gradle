@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
-
+/**
+ * 七牛云 视频播放库
+ */
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -14,12 +16,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jniLibs']
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/pldroid-player-2.1.9.jar')
     implementation deps.appcompat
     implementation deps.recyclerview
-    implementation deps.butterknife
-    annotationProcessor deps.butterknifeCompiler
 }

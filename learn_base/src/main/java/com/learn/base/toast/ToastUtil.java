@@ -35,7 +35,7 @@ public class ToastUtil {
                 .setView(View.inflate(mContext, R.layout.layout_toast, null))
                 .setText(R.id.tv_content_default, msg)
                 .setGravity(Gravity.CENTER, 0, 0)
-                .showLong();
+                .show();
     }
 
     //退出APP时调用

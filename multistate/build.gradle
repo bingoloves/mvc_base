@@ -1,5 +1,7 @@
 apply plugin: 'com.android.library'
-
+/**
+ * 多状态布局
+ */
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -14,12 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.appcompat
-    implementation deps.recyclerview
-    implementation deps.butterknife
-    annotationProcessor deps.butterknifeCompiler
 }
