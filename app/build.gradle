@@ -32,7 +32,7 @@ dependencies {
     implementation rootProject.ext.support['design']
     implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknifeCompiler"]
-    implementation project(':learn_base')
+    //implementation project(':learn_base')
     implementation project(':qiniu')
     implementation project(':multistate')
     implementation project(':wechat')

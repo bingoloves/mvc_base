@@ -1,4 +1,4 @@
-package com.learn.wechat;
+package com.learn.wechat.callback;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMError;

@@ -1,4 +1,4 @@
-package com.learn.wechat;
+package com.learn.wechat.model;
 
 import android.content.Context;
 
@@ -7,7 +7,6 @@ import com.learn.wechat.domain.EaseUser;
 import com.learn.wechat.domain.RobotUser;
 import com.learn.wechat.model.EaseAtMessageHelper;
 import com.learn.wechat.utils.PreferenceManager;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

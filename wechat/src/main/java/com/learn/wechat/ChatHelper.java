@@ -34,6 +34,7 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.push.EMPushConfig;
 import com.hyphenate.util.EMLog;
+import com.learn.wechat.callback.LoginCallback;
 import com.learn.wechat.db.InviteMessgeDao;
 import com.learn.wechat.db.UserDao;
 import com.learn.wechat.domain.EaseAvatarOptions;
@@ -45,6 +46,7 @@ import com.learn.wechat.domain.InviteMessage;
 import com.learn.wechat.domain.RobotUser;
 import com.learn.wechat.model.EaseAtMessageHelper;
 import com.learn.wechat.model.EaseNotifier;
+import com.learn.wechat.model.UserModel;
 import com.learn.wechat.model.UserProfileManager;
 import com.learn.wechat.receiver.CallReceiver;
 import com.learn.wechat.receiver.HeadsetReceiver;
@@ -123,12 +125,12 @@ public class ChatHelper {
         return chatHelper;
     }
     public void init(Context context,boolean debugMode){
+        this.context = context;
         userModel = new UserModel(context);
         EMOptions options = initChatOptions(context);
         if (EaseUI.getInstance().init(context, options)) {
-            this.context = context;
             //debug mode, you'd better set it to false, if you want release your App officially.
-            EMClient.getInstance().setDebugMode(true);
+            EMClient.getInstance().setDebugMode(true);//在做打包混淆时，关闭debug模式，避免消耗不必要的资源
             //get easeui instance
             easeUI = EaseUI.getInstance();
             //to set user's profile and avatar
@@ -144,19 +146,6 @@ public class ChatHelper {
             broadcastManager = LocalBroadcastManager.getInstance(context);
             initDbDao();
         }
-
-        /*this.context = application.getApplicationContext();
-        EMOptions options = new EMOptions();
-        // 默认添加好友时，是不需要验证的，改成需要验证
-        options.setAcceptInvitationAlways(false);
-        // 是否自动将消息附件上传到环信服务器，默认为True是使用环信服务器上传下载，如果设为 false，需要开发者自己处理附件消息的上传和下载
-        options.setAutoTransferMessageAttachments(true);
-        // 是否自动下载附件类消息的缩略图等，默认为 true 这里和上边这个参数相关联
-        options.setAutoDownloadThumbnail(true);
-        // 初始化
-        EMClient.getInstance().init(application.getApplicationContext(), options);
-        // 在做打包混淆时，关闭debug模式，避免消耗不必要的资源
-        EMClient.getInstance().setDebugMode(debugMode);*/
     }
     private void initDbDao() {
         inviteMessgeDao = new InviteMessgeDao(context);
@@ -1512,10 +1501,13 @@ public class ChatHelper {
 
     private EMOptions initChatOptions(Context context){
         Log.d(TAG, "init HuanXin Options");
-
         EMOptions options = new EMOptions();
         // set if accept the invitation automatically
-        options.setAcceptInvitationAlways(false);
+        options.setAcceptInvitationAlways(false);// 默认添加好友时，是不需要验证的，改成需要验证
+        // 是否自动将消息附件上传到环信服务器，默认为True是使用环信服务器上传下载，如果设为 false，需要开发者自己处理附件消息的上传和下载
+        options.setAutoTransferMessageAttachments(true);
+        // 是否自动下载附件类消息的缩略图等，默认为 true 这里和上边这个参数相关联
+        options.setAutoDownloadThumbnail(true);
         // set if you need read ack
         options.setRequireAck(true);
         // set if you need delivery ack

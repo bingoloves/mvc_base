@@ -15,7 +15,7 @@ import com.learn.multistate.MultistateLayout;
 import com.learn.mvc.R;
 import com.learn.qiniu.QiNiuMainActivity;
 import com.learn.wechat.ChatHelper;
-import com.learn.wechat.LoginCallback;
+import com.learn.wechat.callback.LoginCallback;
 
 import java.io.File;
 import java.util.ArrayList;

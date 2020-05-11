@@ -37,4 +37,5 @@ dependencies {
     //api 'com.hyphenate:hyphenate-sdk:3.6.1'
     api 'com.github.bumptech.glide:glide:4.7.1'
     api 'com.parse:parse-android:1.13.1'
+    api project(':learn_base')
 }

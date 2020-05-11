@@ -1,4 +1,4 @@
-package com.learn.wechat;
+package com.learn.wechat.callback;
 
 /**
  * 同步登录回调

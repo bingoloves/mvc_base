@@ -44,6 +44,7 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+        <activity android:name=".activity.ChatActivity"/>
     </application>
 </manifest>
 
