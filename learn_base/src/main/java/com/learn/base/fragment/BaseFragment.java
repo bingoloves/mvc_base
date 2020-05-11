@@ -101,6 +101,9 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void refreshLoad(){}
 
+    public boolean isBackPressed() {
+        return false;
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

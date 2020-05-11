@@ -2,27 +2,38 @@ package com.learn.base.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.learn.base.utils.ActivityStackManager;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.util.Stack;
 
+/**
+ * App的配置信息
+ */
 public class AppConfig implements Application.ActivityLifecycleCallbacks {
     private static AppConfig config;
-    //Activity栈管理
-    private List<Activity> activityStack;
+    private Context context;
     private Application application;
-    //字体缩放倍数
-    private float mFontScale = 1.0f;
-    private AppConfig(){
-        activityStack = new ArrayList<>();
-    }
+    private float fontScale = 1.0f;//字体缩放倍数
+    private float width = 375;//设计图的宽高（dp值）414/736
+    private float height = 789;
+    private float sNoncompatDesity;//屏幕适配分辨率
+    private float sNoncompatScaledDesity;
+    private WeakReference<Activity> currentActivity;//当前Activity的弱引用
+
+    private AppConfig(){}
+
     public static AppConfig getConfig(){
         if (config == null){
             synchronized (AppConfig.class){
@@ -33,55 +44,154 @@ public class AppConfig implements Application.ActivityLifecycleCallbacks {
         }
         return  config;
     }
-
-    public void initConfig(Application application){
+    public void init(Application application){
         this.application = application;
-        application.registerActivityLifecycleCallbacks(this);
+        context = application.getApplicationContext();
+        this.application.registerActivityLifecycleCallbacks(this);
     }
-
-    public float getFontScale() {
-        return mFontScale;
+    /**
+     * 获取当前页面的Activity对象
+     * @return Activity对象弱引用
+     */
+    public WeakReference<Activity> getCurrentActivity() {
+        return currentActivity;
     }
 
     /**
-     * 设置字体大小
+     * 提供一个全局的Context
+     * @return
+     */
+    public Context getContext() {
+        if (context != null) {
+            return context;
+        }
+        throw new NullPointerException("should be initialized in application");
+    }
+    public float getFontScale() {
+        return fontScale;
+    }
+
+    public void setFontScale(float fontScale) {
+        this.fontScale = fontScale;
+    }
+
+    /**
+     * 设置全部已有页面页面Activity字体大小
      * @param fontScale
      */
     public void setAppFontSize(float fontScale) {
-        if (application != null) {
-            if (activityStack != null && !activityStack.isEmpty()) {
-                for (Activity activity : activityStack) {
-                    /*if (activity instanceof SettingActivity) {
-                        continue;
-                    }*/
-                    Resources resources = activity.getResources();
-                    if (resources != null) {
-                        android.content.res.Configuration configuration = resources.getConfiguration();
-                        configuration.fontScale = fontScale;
-                        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-                        activity.recreate();
-                        if (mFontScale != fontScale) {
-                            mFontScale = fontScale;
-                        }
-                    }
+        Stack<Activity> activityStack = ActivityStackManager.getActivityStack();
+        if (activityStack!=null){
+            this.fontScale = fontScale;
+            for (Activity activity : activityStack) {
+                Resources resources = activity.getResources();
+                if (resources != null) {
+                    android.content.res.Configuration configuration = resources.getConfiguration();
+                    configuration.fontScale = fontScale;
+                    resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+                    activity.recreate();
                 }
             }
         }
     }
+    /**
+     * 适配
+     * @param activity
+     * @param application
+     * @param isWidth  是否宽度适配
+     */
+    public void setCustomDesity(@NonNull Activity activity, @NonNull final Application application,boolean isWidth) {
+        final DisplayMetrics appdisplayMetrics = application.getResources().getDisplayMetrics();
+        if (sNoncompatDesity == 0) {
+            sNoncompatDesity = appdisplayMetrics.density;
+            sNoncompatScaledDesity = appdisplayMetrics.scaledDensity;
+            application.registerComponentCallbacks(new ComponentCallbacks() {
+                @Override
+
+
+                public void onConfigurationChanged(Configuration configuration) {
+                    if (configuration != null && configuration.fontScale > 0) {
+                        sNoncompatScaledDesity = application.getResources().getDisplayMetrics().scaledDensity;
+                    }
+                }
+
+                @Override
+
+                public void onLowMemory() {
+
+                }
+
+            });
+        }
+        float targetDesity = isWidth?((float) appdisplayMetrics.widthPixels / width):((float) appdisplayMetrics.heightPixels / height);//设计图的宽度dp
+        float targetScaleDesity = targetDesity * (sNoncompatScaledDesity / sNoncompatDesity);
+        int targetDesityDpi = (int) (160 * targetDesity);
+        appdisplayMetrics.density = targetDesity;
+        appdisplayMetrics.scaledDensity = targetScaleDesity;
+        appdisplayMetrics.densityDpi = targetDesityDpi;
+        appdisplayMetrics.scaledDensity = targetScaleDesity;
+
+        final DisplayMetrics activityDisplayMetrics = activity.getResources().getDisplayMetrics();
+        activityDisplayMetrics.density = targetDesity;
+        activityDisplayMetrics.scaledDensity = targetScaleDesity;
+        activityDisplayMetrics.densityDpi = targetDesityDpi;
+        setBitmapDefaultDensity(activityDisplayMetrics.densityDpi);
+    }
+
+    /**
+     * 设置 Bitmap 的默认屏幕密度
+     * 由于 Bitmap 的屏幕密度是读取配置的，导致修改未被启用
+     * 所有，反射方式强行修改
+     *
+     * @param defaultDensity 屏幕密度
+     */
+    private static void setBitmapDefaultDensity(int defaultDensity) {
+        Class clazz;
+        try {
+            clazz = Class.forName("android.graphics.Bitmap");
+            Field field = clazz.getDeclaredField("sDefaultDensity");
+            field.setAccessible(true);
+            field.set(null, defaultDensity);
+            field.setAccessible(false);
+        } catch (ClassNotFoundException e) {
+        } catch (NoSuchFieldException e) {
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 取消当前的适配
+     *
+     * @param activity
+     */
+    public void cancelAdaptScreen(Activity activity) {
+        final DisplayMetrics systemDm = Resources.getSystem().getDisplayMetrics();
+        final DisplayMetrics appDm = context.getResources().getDisplayMetrics();
+        final DisplayMetrics activityDm = activity.getResources().getDisplayMetrics();
+        activityDm.density = systemDm.density;
+        activityDm.scaledDensity = systemDm.scaledDensity;
+        activityDm.densityDpi = systemDm.densityDpi;
+        appDm.density = systemDm.density;
+        appDm.scaledDensity = systemDm.scaledDensity;
+        appDm.densityDpi = systemDm.densityDpi;
+        setBitmapDefaultDensity(activityDm.densityDpi);
+    }
+
 
     @Override
     public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
-        if (activityStack == null) {
-            activityStack = new ArrayList<>();
-        }
         // 禁止字体大小随系统设置变化
         Resources resources = activity.getResources();
-        if (resources != null && resources.getConfiguration().fontScale != mFontScale) {
+        if (resources != null && resources.getConfiguration().fontScale != fontScale) {
             android.content.res.Configuration configuration = resources.getConfiguration();
-            configuration.fontScale = mFontScale;
+            configuration.fontScale = fontScale;
             resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         }
-        activityStack.add(activity);
+        setCustomDesity(activity,application,true);
+        currentActivity = new WeakReference<>(activity);
+        ActivityStackManager.getStackManager().addActivity(activity);
+
     }
 
     @Override
@@ -101,7 +211,7 @@ public class AppConfig implements Application.ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityStopped(@NonNull Activity activity) {
-        activity.finish();
+
     }
 
     @Override
@@ -111,9 +221,7 @@ public class AppConfig implements Application.ActivityLifecycleCallbacks {
 
     @Override
     public void onActivityDestroyed(@NonNull Activity activity) {
-        if (activityStack != null) {
-            activityStack.remove(activity);
-        }
+        ActivityStackManager.getStackManager().removeActivity(activity);
     }
 
     /**
@@ -146,42 +254,5 @@ public class AppConfig implements Application.ActivityLifecycleCallbacks {
             e.printStackTrace();
         }
         return localVersionName;
-    }
-
-    /**
-     * 关闭最上面的一个Activity
-     */
-    public void finishTopActivity(){
-        if (activityStack != null) {
-            int size = activityStack.size();
-            if (size>0){
-                Activity activity = activityStack.get(size - 1);
-                if (activity!=null && !activity.isFinishing()){
-                    activity.finish();
-                    activityStack.remove(activity);
-                }
-            }
-        }
-    }
-
-    /**
-     * 页面关闭返回
-     * @param step  返回的步数
-     */
-    public void back(int step){
-        if (activityStack != null) {
-            int size = activityStack.size();
-            List<Activity> temp = new ArrayList<>();
-            if (step>0 && step<size){
-                for (int i = size-1;i>0;i--){
-                    Activity activity = activityStack.get(i);
-                    temp.add(activity);
-                    if (activity != null && !activity.isFinishing()){
-                        activity.finish();
-                    }
-                }
-                activityStack.removeAll(temp);
-            }
-        }
     }
 }

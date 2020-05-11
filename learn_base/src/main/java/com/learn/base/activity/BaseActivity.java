@@ -78,11 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastUtil.showAtCenter(this,msg);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
+
 
     @Override
     public void startActivity(Intent intent) {
@@ -90,11 +86,38 @@ public abstract class BaseActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_to_left);//右进左出效果
         //overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);//下进上出效果
     }
+    /**
+     * 跳转页面
+     *
+     * @param clz 所跳转的目的Activity类
+     */
+    public void startActivity(Class<?> clz) {
+        startActivity(new Intent(this, clz));
+    }
 
+    /**
+     * 跳转页面
+     *
+     * @param clz    所跳转的目的Activity类
+     * @param bundle 跳转所携带的信息
+     */
+    public void startActivity(Class<?> clz, Bundle bundle) {
+        Intent intent = new Intent(this, clz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
         //overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

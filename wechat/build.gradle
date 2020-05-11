@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    //环信配置
+    //use legacy for android 6.0
+    useLibrary 'org.apache.http.legacy'
+
+    //自3.6.0开始需要java8的支持
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api rootProject.ext.support['appcompat-v7']
+    api rootProject.ext.dependencies['gson']
+    //api rootProject.ext.dependencies['glide']
+    //annotationProcessor rootProject.ext.dependencies['glide-compiler']
+    //implementation 'com.google.android.gms:play-services-base:11.4.0'
+    //implementation 'com.google.firebase:firebase-messaging:11.4.0'
+    //api 'com.hyphenate:hyphenate-sdk:3.6.1'
+    api 'com.github.bumptech.glide:glide:4.7.1'
+    api 'com.parse:parse-android:1.13.1'
+}

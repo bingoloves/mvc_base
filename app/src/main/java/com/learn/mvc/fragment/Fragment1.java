@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.learn.base.fragment.BaseFragment;
+import com.learn.base.utils.ExecutorUtil;
 import com.learn.multistate.MultistateLayout;
 import com.learn.mvc.R;
 import com.learn.qiniu.QiNiuMainActivity;
+import com.learn.wechat.ChatHelper;
+import com.learn.wechat.LoginCallback;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,7 +40,8 @@ public class Fragment1 extends BaseFragment{
     @BindView(R.id.avatar_iv)
     ImageView mAvatarIv;
     @OnClick({R.id.moveQiNiu,R.id.choose_photo,R.id.take_photo,R.id.pre_photo,
-            R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv
+            R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv,
+            R.id.crash_btn,R.id.register_btn
     })
     public void clickEvent(View view){
         switch (view.getId()){
@@ -65,6 +68,28 @@ public class Fragment1 extends BaseFragment{
                 break;
             case R.id.data_tv:
                 multistateLayout.setStatus(MultistateLayout.EMPTY);
+                break;
+            case R.id.crash_btn:
+                //伪造一个异常
+                Integer.parseInt("goldze");
+                break;
+            case R.id.register_btn:
+                ExecutorUtil.get().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChatHelper.getChatHelper().login("xuebing", "123456", new LoginCallback() {
+                            @Override
+                            public void onNext() {
+                                toast("注册成功");
+                            }
+
+                            @Override
+                            public void onError(String msg) {
+                                toast(msg);
+                            }
+                        });
+                    }
+                });
                 break;
         }
     }
