@@ -1,9 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.learn.base">
     <application>
-        <!--<activity
-            android:name=".base.ContainerActivity"
-            android:configChanges="orientation|keyboardHidden"/>-->
         <activity
             android:name=".crash.DefaultErrorActivity"
             android:process=":error_activity" />
@@ -13,6 +10,16 @@
             android:authorities="${applicationId}.crashinitprovider"
             android:exported="false"
             android:initOrder="101" />
+        <!-- 适配Android 7.0, 需要将下方的com.hyphenate.chatuidemo替换为你的app包名 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <!--针对刘海屏适配 方案一-->
         <!--<meta-data android:name="android.notch_support" android:value="true"/>-->
         <!-- 全局Context提供者 -->

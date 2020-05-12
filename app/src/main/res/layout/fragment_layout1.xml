@@ -68,7 +68,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/logo2"/>
+            android:src="@mipmap/logo"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

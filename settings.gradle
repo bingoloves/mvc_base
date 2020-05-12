@@ -1,1 +1,1 @@
-include ':app', ':learn_base', ':qiniu', ':multistate', ':wechat'
+include ':app', ':learn_base', ':qiniu', ':multistate', ':wechat', ':hmspush'

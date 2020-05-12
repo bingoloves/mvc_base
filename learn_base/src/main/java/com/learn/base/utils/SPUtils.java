@@ -2,6 +2,14 @@ package com.learn.base.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Base64;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -38,6 +46,16 @@ public class SPUtils {
             editor.putFloat(key, (Float) object);
         } else if (object instanceof Long) {
             editor.putLong(key, (Long) object);
+        } else if (object instanceof Serializable){
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(baos);
+                oos.writeObject(object);//把对象写到流里
+                String temp = new String(Base64.encode(baos.toByteArray(), Base64.DEFAULT));
+                editor.putString(key, temp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             editor.putString(key, object.toString());
         }
@@ -66,10 +84,43 @@ public class SPUtils {
             return sp.getFloat(key, (Float) defaultObject);
         } else if (defaultObject instanceof Long) {
             return sp.getLong(key, (Long) defaultObject);
+        } else if (defaultObject instanceof Serializable) {
+            String temp = sp.getString(key, "");
+            ByteArrayInputStream bais = new ByteArrayInputStream(Base64.decode(temp.getBytes(), Base64.DEFAULT));
+            Object object = null;
+            try {
+                ObjectInputStream ois = new ObjectInputStream(bais);
+                object = ois.readObject();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return object;
         }
-
         return null;
     }
+
+    public static String getString(Context context,String key){
+        return (String) get(context,key,"");
+    }
+    public static int getInt(Context context,String key){
+        return (int) get(context,key,-1);
+    }
+    public static int getInt(Context context,String key,int defaultValue){
+        return (int) get(context,key,defaultValue);
+    }
+    public static float getFloat(Context context,String key){
+        return (float) get(context,key,-1);
+    }
+    public static long getLong(Context context,String key){
+        return (long) get(context,key,-1);
+    }
+    public static boolean getBoolean(Context context,String key){
+        return (boolean) get(context,key,false);
+    }
+    public static<T> T getSerializable(Context context,String key,Class<T> clazz){
+        return (T) get(context,key,clazz);
+    }
+
     /**
      * 移除某个key值已经对应的值
      *

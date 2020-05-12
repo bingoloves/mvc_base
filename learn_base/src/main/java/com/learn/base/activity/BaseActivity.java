@@ -83,7 +83,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void startActivity(Intent intent) {
         super.startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_to_left);//右进左出效果
+        //overridePendingTransition(R.anim.slide_in_from_right,R.anim.slide_out_to_left);//右进左出效果
         //overridePendingTransition(R.anim.slide_in_bottom, R.anim.slide_out_top);//下进上出效果
     }
     /**
@@ -92,9 +92,18 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param clz 所跳转的目的Activity类
      */
     public void startActivity(Class<?> clz) {
-        startActivity(new Intent(this, clz));
+        startActivity(clz,false);
     }
-
+    /**
+     * 跳转页面
+     *
+     * @param clz 所跳转的目的Activity类
+     * @param isFinish 是否关闭当前页
+     */
+    public void startActivity(Class<?> clz,boolean isFinish) {
+        startActivity(new Intent(this, clz));
+        if (isFinish)finish();
+    }
     /**
      * 跳转页面
      *
@@ -102,16 +111,28 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param bundle 跳转所携带的信息
      */
     public void startActivity(Class<?> clz, Bundle bundle) {
+        startActivity(clz,bundle,false);
+    }
+    /**
+     * 跳转页面
+     *
+     * @param clz    所跳转的目的Activity类
+     * @param bundle 跳转所携带的信息
+     * @param isFinish 是否关闭当前页
+     */
+    public void startActivity(Class<?> clz, Bundle bundle,boolean isFinish) {
         Intent intent = new Intent(this, clz);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
         startActivity(intent);
+        if (isFinish)finish();
     }
+
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
+        //overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_to_right);
         //overridePendingTransition(R.anim.slide_in_top, R.anim.slide_out_bottom);
     }
 

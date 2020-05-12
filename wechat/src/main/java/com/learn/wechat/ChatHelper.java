@@ -35,6 +35,7 @@ import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.push.EMPushConfig;
 import com.hyphenate.util.EMLog;
 import com.learn.wechat.callback.LoginCallback;
+import com.learn.wechat.db.DemoDBManager;
 import com.learn.wechat.db.InviteMessgeDao;
 import com.learn.wechat.db.UserDao;
 import com.learn.wechat.domain.EaseAvatarOptions;
@@ -606,6 +607,10 @@ public class ChatHelper {
         }
         return user;
     }
+    public void setRobotList(Map<String, RobotUser> robotList) {
+        this.robotList = robotList;
+    }
+
     public Map<String, RobotUser> getRobotList() {
         if (isLoggedIn() && robotList == null) {
             robotList = userModel.getRobotList();
@@ -1682,19 +1687,70 @@ public class ChatHelper {
     }
 
     /**
-     * 同步登出
+     * logout
+     *
+     * @param unbindDeviceToken
+     *            whether you need unbind your device token
+     * @param callback
+     *            callback
      */
-    public void logout(){
-        EMClient.getInstance().logout(true);
-    }
+    public void logout(boolean unbindDeviceToken, final EMCallBack callback) {
+        endCall();
+        Log.d(TAG, "logout: " + unbindDeviceToken);
+        EMClient.getInstance().logout(unbindDeviceToken, new EMCallBack() {
 
-    /**
-     * 异步登出
-     */
-    public void logout(EMCallBack callBack){
-        EMClient.getInstance().logout(true,callBack);
-    }
+            @Override
+            public void onSuccess() {
+                reset();
+                if (callback != null) {
+                    callback.onSuccess();
+                }
 
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+                if (callback != null) {
+                    callback.onProgress(progress, status);
+                }
+            }
+
+            @Override
+            public void onError(int code, String error) {
+                reset();
+                if (callback != null) {
+                    callback.onError(code, error);
+                }
+            }
+        });
+    }
+    void endCall() {
+        try {
+            EMClient.getInstance().callManager().endCall();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    synchronized void reset(){
+        isSyncingGroupsWithServer = false;
+        isSyncingContactsWithServer = false;
+        isSyncingBlackListWithServer = false;
+
+        userModel.setGroupsSynced(false);
+        userModel.setContactSynced(false);
+        userModel.setBlacklistSynced(false);
+
+        isGroupsSyncedWithServer = false;
+        isContactsSyncedWithServer = false;
+        isBlackListSyncedWithServer = false;
+
+        isGroupAndContactListenerRegisted = false;
+
+        setContactList(null);
+        setRobotList(null);
+        getUserProfileManager().reset();
+        DemoDBManager.getInstance().closeDB();
+    }
     /**
      * 设置连接监听
      */

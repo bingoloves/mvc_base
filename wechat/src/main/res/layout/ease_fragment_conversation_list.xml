@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:background="@color/common_bg"
+	android:orientation="vertical">
+
+	<com.learn.base.layout.NavigationBar
+		android:id="@+id/title_bar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:nav_bar_title="@string/session"
+		app:nav_bar_bg="@color/colorPrimary"/>
+    
+    <include layout="@layout/ease_search_bar" />
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fl_error_item"
+        >
+    </FrameLayout>
+
+
+    <com.learn.wechat.widget.EaseConversationList
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="#00000000"
+        android:divider="@null"
+        app:cvsListPrimaryTextSize="16sp"/>
+
+</LinearLayout>

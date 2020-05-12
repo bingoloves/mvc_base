@@ -14,6 +14,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public class App extends Application {
+    /**
+     * nickname for current user, the nickname instead of ID be shown when user receive notification from APNs
+     */
+    public static String currentUserNick = "";
     @Override
     public void onCreate() {
         super.onCreate();

@@ -15,6 +15,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     //环信配置
     //use legacy for android 6.0
     useLibrary 'org.apache.http.legacy'
@@ -38,4 +43,7 @@ dependencies {
     api 'com.github.bumptech.glide:glide:4.7.1'
     api 'com.parse:parse-android:1.13.1'
     api project(':learn_base')
+    api project(':hmspush')
+    // meizu push
+    implementation 'com.meizu.flyme.internet:push-internal:3.7.0@aar'//配置集成sdk
 }

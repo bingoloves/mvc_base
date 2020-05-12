@@ -74,22 +74,7 @@ public class Fragment1 extends BaseFragment{
                 Integer.parseInt("goldze");
                 break;
             case R.id.register_btn:
-                ExecutorUtil.get().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        ChatHelper.getChatHelper().login("xuebing", "123456", new LoginCallback() {
-                            @Override
-                            public void onNext() {
-                                toast("注册成功");
-                            }
 
-                            @Override
-                            public void onError(String msg) {
-                                toast(msg);
-                            }
-                        });
-                    }
-                });
                 break;
         }
     }
