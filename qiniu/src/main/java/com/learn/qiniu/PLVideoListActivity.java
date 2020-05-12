@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.pili.pldroid.player.widget.PLVideoTextureView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PLVideoListActivity extends AppCompatActivity {
@@ -22,9 +25,14 @@ public class PLVideoListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
-        for (int i = 0; i < 5; ++i) {
-            mPlayList.add(i, getIntent().getStringExtra("videoPath"));
+        String videoPath = getIntent().getStringExtra("videoPath");
+        if (!TextUtils.isEmpty(videoPath)){
+            String[] split = videoPath.split(",");
+            if (split!=null) mPlayList = Arrays.asList(split);
         }
+//        for (int i = 0; i < 5; ++i) {
+//            mPlayList.add(i, getIntent().getStringExtra("videoPath"));
+//        }
         mAdapter = new VideoListAdapter(mPlayList);
         mVideoListView = findViewById(R.id.video_list);
         mVideoListView.setHasFixedSize(true);
