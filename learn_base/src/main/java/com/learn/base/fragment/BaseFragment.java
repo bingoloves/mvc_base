@@ -24,7 +24,8 @@ public abstract class BaseFragment extends Fragment {
     private boolean isCreateView;
 
     private Unbinder unbinder;
-
+    private ViewGroup container;
+    private Bundle savedInstanceState;
     /**
      * 当从另一个activity回到fragment所在的activity
      * 当fragment回调onResume方法的时候，可以通过这个变量判断fragment是否可见，来决定是否要刷新数据
@@ -58,7 +59,8 @@ public abstract class BaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if( mRoot == null ){
             mRoot = inflater.inflate(getContentView(), container, false);
-            createView(container,savedInstanceState);
+            this.container = container;
+            this.savedInstanceState = savedInstanceState;
             isCreateView = true;
             unbinder = ButterKnife.bind(this, mRoot);
             initView(mRoot);
@@ -83,7 +85,6 @@ public abstract class BaseFragment extends Fragment {
         isVisible = false;
     }
     protected abstract int getContentView();
-    protected abstract void createView(ViewGroup container,Bundle savedInstanceState);
     protected abstract void initView(View root);
     protected abstract void initListener();
 
@@ -108,5 +109,8 @@ public abstract class BaseFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        container = null;
+        savedInstanceState = null;
+        mRoot = null;
     }
 }

@@ -2,14 +2,20 @@ package com.learn.mvc;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.learn.base.app.AppConfig;
 import com.learn.base.crash.CaocConfig;
 import com.learn.base.utils.LogUtils;
+import com.learn.gallery.GalleryHelper;
+import com.learn.gallery.ImageLoader;
 import com.learn.multistate.MultistateLayout;
+import com.learn.photo.PhotoHelper;
 import com.learn.wechat.ChatHelper;
-
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,14 +24,45 @@ public class App extends Application {
      * nickname for current user, the nickname instead of ID be shown when user receive notification from APNs
      */
     public static String currentUserNick = "";
+    private Context context;
     @Override
     public void onCreate() {
         super.onCreate();
+        this.context = this;
         LogUtils.getInstance().setDebug(BuildConfig.DEBUG);//是否开启打印日志
         initCrash();//初始化全局异常崩溃
         initMultisateLayout();//多状态布局
         AppConfig.getConfig().init(this);//屏幕适配
         initWechat();
+        iniGallery();
+    }
+
+    /**
+     * 初始哈图片预览 图片加载器
+     */
+    private void iniGallery() {
+        GalleryHelper.get().setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(String imageUrl, ImageView imageView) {
+                Glide.with(context).load(imageUrl).into(imageView);
+            }
+
+            @Override
+            public void displayGif(String imageUrl, ImageView imageView) {
+                Glide.with(context).load(imageUrl).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageView);
+            }
+        });
+        PhotoHelper.get().setImageLoader(new com.learn.photo.ImageLoader() {
+            @Override
+            public void displayImage(String imageUrl, ImageView imageView) {
+                Glide.with(context).load(imageUrl).into(imageView);
+            }
+
+            @Override
+            public void displayGif(String imageUrl, ImageView imageView) {
+                Glide.with(context).load(imageUrl).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(imageView);
+            }
+        });
     }
 
     /**

@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+//import com.bumptech.glide.request.RequestOptions;
 import com.learn.wechat.R;
 import com.learn.wechat.domain.EaseEmojicon;
 import com.learn.wechat.utils.EaseSmileUtils;
@@ -48,7 +48,8 @@ public class EmojiconGridAdapter extends ArrayAdapter<EaseEmojicon>{
                 imageView.setImageResource(emojicon.getIcon());
             }else if(emojicon.getIconPath() != null){
                 Glide.with(getContext()).load(emojicon.getIconPath())
-                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
+                        .placeholder(R.drawable.ease_default_expression)
+                        //.apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
                         .into(imageView);
             }
         }

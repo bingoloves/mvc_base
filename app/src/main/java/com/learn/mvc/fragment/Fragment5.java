@@ -1,8 +1,6 @@
 package com.learn.mvc.fragment;
 
-import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.learn.base.fragment.BaseFragment;
 import com.learn.mvc.R;
@@ -12,11 +10,6 @@ public class Fragment5 extends BaseFragment {
     @Override
     protected int getContentView() {
         return R.layout.fragment_layout5;
-    }
-
-    @Override
-    protected void createView(ViewGroup container, Bundle savedInstanceState) {
-
     }
 
     @Override

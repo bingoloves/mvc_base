@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+//import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMMessage;
 import com.learn.wechat.EaseConstant;
 import com.learn.wechat.EaseUI;
@@ -50,11 +50,13 @@ public class EaseChatRowBigExpression extends EaseChatRowText{
             if(emojicon.getBigIcon() != 0){
 
                 Glide.with(activity).load(emojicon.getBigIcon())
-                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
+                        .placeholder(R.drawable.ease_default_expression)
+                        //.apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
                         .into(imageView);
             }else if(emojicon.getBigIconPath() != null){
                 Glide.with(activity).load(emojicon.getBigIconPath())
-                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
+                        .placeholder(R.drawable.ease_default_expression)
+                        //.apply(RequestOptions.placeholderOf(R.drawable.ease_default_expression))
                         .into(imageView);
             }else{
                 imageView.setImageResource(R.drawable.ease_default_expression);

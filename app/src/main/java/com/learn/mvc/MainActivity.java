@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import com.learn.mvc.fragment.Fragment2;
 import com.learn.mvc.fragment.Fragment3;
 import com.learn.mvc.fragment.Fragment4;
 import com.learn.mvc.fragment.Fragment5;
+import com.learn.photo.ImagePicker;
 import com.learn.wechat.ChatHelper;
 import com.learn.wechat.Constant;
 import com.learn.wechat.HMSPushHelper;
@@ -487,7 +489,10 @@ public class MainActivity extends BaseActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

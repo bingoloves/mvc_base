@@ -26,24 +26,6 @@
                 android:textColor="@color/colorAccent"
                 android:text="跳转七牛"/>
             <Button
-                android:id="@+id/choose_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:text="选择图片"/>
-            <Button
-                android:id="@+id/take_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:text="选择图片"/>
-            <Button
-                android:id="@+id/pre_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:text="预览图片"/>
-            <Button
                 android:id="@+id/crash_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,19 +39,6 @@
                 android:text="注册用户"/>
         </LinearLayout>
     </HorizontalScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="5dp">
-        <ImageView
-            android:id="@+id/avatar_iv"
-            android:layout_marginLeft="20dp"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/logo"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

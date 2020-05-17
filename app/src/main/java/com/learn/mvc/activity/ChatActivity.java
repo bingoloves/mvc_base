@@ -34,7 +34,6 @@ public class ChatActivity extends BaseActivity{
         //pass parameters to chat fragment
         chatFragment.setArguments(getIntent().getExtras());
         getSupportFragmentManager().beginTransaction().add(R.id.container, chatFragment).commit();
-
     }
 
     @Override

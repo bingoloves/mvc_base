@@ -40,11 +40,6 @@ public class Fragment2 extends BaseFragment {
     }
 
     @Override
-    protected void createView(ViewGroup container, Bundle savedInstanceState) {
-
-    }
-
-    @Override
     protected void initView(View root) {
 
     }

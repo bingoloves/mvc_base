@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
+//import com.bumptech.glide.request.RequestOptions;
 import com.learn.wechat.EaseUI;
 import com.learn.wechat.R;
 import com.learn.wechat.domain.EaseUser;
@@ -44,8 +44,9 @@ public class EaseUserUtils {
             } catch (Exception e) {
                 //use default avatar
                 Glide.with(context).load(user.getAvatar())
-                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .placeholder(R.drawable.ease_default_avatar)
+//                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(imageView);
             }
         }else{
