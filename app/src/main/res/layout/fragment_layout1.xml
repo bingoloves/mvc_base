@@ -31,12 +31,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccent"
                 android:text="异常捕获"/>
-            <Button
-                android:id="@+id/register_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:text="注册用户"/>
         </LinearLayout>
     </HorizontalScrollView>
     <LinearLayout

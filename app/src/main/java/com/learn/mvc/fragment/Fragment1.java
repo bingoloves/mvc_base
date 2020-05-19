@@ -44,21 +44,9 @@ public class Fragment1 extends BaseFragment{
             "https://cmgw-hz.lechange.com:8890/LCO/4L03F00PAZF1379/1/1/20191216T055008/dev_4L03F00PAZF1379_20191216T055008.m3u8",
             "https://cmgw-hz.lechange.com:8890/LCO/4L03F00PAZF1379/7/1/20191216T055052/dev_4L03F00PAZF1379_20191216T055052.m3u8"
     };
-    String[] imageUrls = new String[]{
-            "https://www.kymjs.com/qiniu/image/logo_s.jpg",
-            "https://static.oschina.net/uploads/zb/2015/0905/214628_00Ui_1164691.gif",
-            "https://www.jiuwa.net/tuku/20170823/F45v1uhz.gif",
-            "https://www.kymjs.com/qiniu/image/logo_grey.png",
-            "https://www.kymjs.com/qiniu/image/kymjs.png",
-            "https://www.kymjs.com/qiniu/image/logo_s.png",
-            "https://www.kymjs.com/qiniu/image/logo_grey.png",
-            "https://www.kymjs.com/qiniu/image/kymjs.png"
-    };
     @BindView(R.id.multistate_layout)
     MultistateLayout multistateLayout;
-    @OnClick({R.id.moveQiNiu,R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv,
-            R.id.crash_btn,R.id.register_btn
-    })
+    @OnClick({R.id.moveQiNiu,R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv, R.id.crash_btn})
     public void clickEvent(View view){
         switch (view.getId()){
             case R.id.moveQiNiu:
@@ -82,9 +70,6 @@ public class Fragment1 extends BaseFragment{
             case R.id.crash_btn:
                 //伪造一个异常
                 Integer.parseInt("goldze");
-                break;
-            case R.id.register_btn:
-
                 break;
         }
     }
@@ -111,13 +96,5 @@ public class Fragment1 extends BaseFragment{
     @Override
     protected void lazyLoad() {
 
-    }
-
-
-    /**
-     * 设置预览
-     */
-    private void preview(){
-        GalleryActivity.preview(getActivity(),0,imageUrls);
     }
 }

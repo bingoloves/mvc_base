@@ -27,6 +27,16 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class Fragment4 extends BaseFragment {
     private static final int REQUEST_CODE = 1001;
+    String[] imageUrls = new String[]{
+            "https://www.kymjs.com/qiniu/image/logo_s.jpg",
+            "https://static.oschina.net/uploads/zb/2015/0905/214628_00Ui_1164691.gif",
+            "https://www.jiuwa.net/tuku/20170823/F45v1uhz.gif",
+            "https://www.kymjs.com/qiniu/image/logo_grey.png",
+            "https://www.kymjs.com/qiniu/image/kymjs.png",
+            "https://www.kymjs.com/qiniu/image/logo_s.png",
+            "https://www.kymjs.com/qiniu/image/logo_grey.png",
+            "https://www.kymjs.com/qiniu/image/kymjs.png"
+    };
     @BindView(R.id.recyclerview)
     RecyclerView contentRv;
     private AddImageAdapter mAdapter;
@@ -81,8 +91,8 @@ public class Fragment4 extends BaseFragment {
         mAdapter = new AddImageAdapter(getContext(),true);
         mAdapter.setOnItemClickListener(new AddImageAdapter.OnItemClickListener() {
             @Override
-            public void onClick(int postion, boolean isAdd) {
-                if (isAdd){
+            public void onClick(int postion, boolean isAddPhoto) {
+                if (isAddPhoto){
                     ImagePicker.builder()
                             .useCamera(true) // 设置是否使用拍照
                             .setSingle(true)  //设置是否单选
@@ -122,7 +132,6 @@ public class Fragment4 extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        LogUtils.getInstance().e("11111111111");
         if (requestCode == REQUEST_CODE && data != null) {
             ArrayList<String> images = data.getStringArrayListExtra(ImagePicker.SELECT_RESULT);
             LogUtils.getInstance().e(new Gson().toJson(images));
