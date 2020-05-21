@@ -57,15 +57,43 @@
             android:layout_height="wrap_content"
             android:text="无数据" />
     </LinearLayout>
+    <!--图片处理-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/image1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="普通" />
+        <Button
+            android:id="@+id/image2_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圆形" />
+        <Button
+            android:id="@+id/image3_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="圆角" />
+        <Button
+            android:id="@+id/image4_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="中心裁剪" />
+    </LinearLayout>
     <com.learn.multistate.MultistateLayout
         android:id="@+id/multistate_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我是内容"
-            android:textColor="@color/colorPrimary"
-            android:layout_gravity="center"/>
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/test_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
     </com.learn.multistate.MultistateLayout>
 </LinearLayout>

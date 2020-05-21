@@ -1,42 +1,22 @@
 package com.learn.mvc.fragment;
 
-import android.Manifest;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import com.learn.base.fragment.BaseFragment;
-import com.learn.base.utils.ExecutorUtil;
+import com.learn.base.utils.DateUtils;
+import com.learn.base.utils.LogUtils;
 import com.learn.base.utils.StringUtil;
-import com.learn.gallery.GalleryActivity;
-import com.learn.gallery.GalleryHelper;
 import com.learn.multistate.MultistateLayout;
 import com.learn.mvc.R;
-import com.learn.photo.ImagePicker;
+import com.learn.mvc.glide.GlideHelper;
 import com.learn.qiniu.PLVideoListActivity;
-import com.learn.qiniu.QiNiuMainActivity;
-import com.learn.wechat.ChatHelper;
-import com.learn.wechat.callback.LoginCallback;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.bingoogolapple.baseadapter.BGABaseAdapterUtil;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
-import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
-import cn.bingoogolapple.photopicker.imageloader.BGAImage;
-import cn.bingoogolapple.photopicker.util.BGAPhotoHelper;
-import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static android.app.Activity.RESULT_OK;
 
 public class Fragment1 extends BaseFragment{
     String[] videoPath = new String []{
@@ -44,9 +24,14 @@ public class Fragment1 extends BaseFragment{
             "https://cmgw-hz.lechange.com:8890/LCO/4L03F00PAZF1379/1/1/20191216T055008/dev_4L03F00PAZF1379_20191216T055008.m3u8",
             "https://cmgw-hz.lechange.com:8890/LCO/4L03F00PAZF1379/7/1/20191216T055052/dev_4L03F00PAZF1379_20191216T055052.m3u8"
     };
+    private String iamgeTest = "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg";
+    @BindView(R.id.test_iv)
+    ImageView testIv;
     @BindView(R.id.multistate_layout)
     MultistateLayout multistateLayout;
-    @OnClick({R.id.moveQiNiu,R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv, R.id.crash_btn})
+    @OnClick({R.id.moveQiNiu,R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv, R.id.crash_btn,
+            R.id.image1_tv,R.id.image2_tv,R.id.image3_tv,R.id.image4_tv
+    })
     public void clickEvent(View view){
         switch (view.getId()){
             case R.id.moveQiNiu:
@@ -71,6 +56,26 @@ public class Fragment1 extends BaseFragment{
                 //伪造一个异常
                 Integer.parseInt("goldze");
                 break;
+            case R.id.image1_tv:
+                new GlideHelper.Builder().build().load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
+                break;
+            case R.id.image2_tv:
+                new GlideHelper.Builder()
+                        .build()
+                        .load(getContext(),iamgeTest,testIv,GlideHelper.CIRCLE);
+                break;
+            case R.id.image3_tv:
+                new GlideHelper.Builder()
+                        .setRoundingRadius(16)
+                        .build()
+                        .load(getContext(),iamgeTest,testIv,GlideHelper.ROUND);
+                break;
+            case R.id.image4_tv:
+                new GlideHelper.Builder()
+                        .fitCenter()
+                        .build()
+                        .load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
+                break;
         }
     }
     @Override
@@ -81,16 +86,20 @@ public class Fragment1 extends BaseFragment{
     @Override
     protected void initView(View root) {
         multistateLayout.setStatus(MultistateLayout.SUCCESS);
+        new GlideHelper.Builder().build().load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
+//        Date dayBegin = DateUtils.getDayBegin();
+//        Date dayEnd = DateUtils.getDayEnd();
+//        LogUtils.getInstance().e(dayBegin.getTime()+"------"+dayEnd.getTime());
     }
 
     @Override
     protected void initListener() {
-            multistateLayout.setOnReloadListener(new MultistateLayout.OnReloadListener() {
-                @Override
-                public void onReload(View v, int status) {
-                    toast("status = "+status);
-                }
-            });
+        multistateLayout.setOnReloadListener(new MultistateLayout.OnReloadListener() {
+            @Override
+            public void onReload(View v, int status) {
+                toast("status = "+status);
+            }
+        });
     }
 
     @Override
