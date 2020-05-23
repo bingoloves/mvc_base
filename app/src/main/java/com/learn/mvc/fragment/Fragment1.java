@@ -57,22 +57,31 @@ public class Fragment1 extends BaseFragment{
                 Integer.parseInt("goldze");
                 break;
             case R.id.image1_tv:
-                new GlideHelper.Builder().build().load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
+                new GlideHelper.Builder().crossFade().build().load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
                 break;
             case R.id.image2_tv:
                 new GlideHelper.Builder()
+                        .crossFade()
                         .build()
                         .load(getContext(),iamgeTest,testIv,GlideHelper.CIRCLE);
                 break;
             case R.id.image3_tv:
                 new GlideHelper.Builder()
+                        .crossFade()
                         .setRoundingRadius(16)
                         .build()
                         .load(getContext(),iamgeTest,testIv,GlideHelper.ROUND);
+//                new GlideHelper.Builder()
+//                        .crossFade()
+//                        .fitCenter()
+//                        .setRoundingRadius(16)
+//                        .build()
+//                        .load(getContext(),R.drawable.em_splash,testIv,GlideHelper.ROUND);
                 break;
             case R.id.image4_tv:
                 new GlideHelper.Builder()
                         .fitCenter()
+                        .crossFade()
                         .build()
                         .load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
                 break;
@@ -90,10 +99,6 @@ public class Fragment1 extends BaseFragment{
 //        Date dayBegin = DateUtils.getDayBegin();
 //        Date dayEnd = DateUtils.getDayEnd();
 //        LogUtils.getInstance().e(dayBegin.getTime()+"------"+dayEnd.getTime());
-    }
-
-    @Override
-    protected void initListener() {
         multistateLayout.setOnReloadListener(new MultistateLayout.OnReloadListener() {
             @Override
             public void onReload(View v, int status) {

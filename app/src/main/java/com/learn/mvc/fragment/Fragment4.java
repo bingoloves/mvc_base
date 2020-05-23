@@ -107,11 +107,6 @@ public class Fragment4 extends BaseFragment {
     }
 
     @Override
-    protected void initListener() {
-
-    }
-
-    @Override
     protected void lazyLoad() {
 
     }

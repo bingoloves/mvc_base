@@ -64,7 +64,6 @@ public abstract class BaseFragment extends Fragment {
             isCreateView = true;
             unbinder = ButterKnife.bind(this, mRoot);
             initView(mRoot);
-            initListener();
             onVisible();
         }
         return mRoot;
@@ -86,7 +85,6 @@ public abstract class BaseFragment extends Fragment {
     }
     protected abstract int getContentView();
     protected abstract void initView(View root);
-    protected abstract void initListener();
 
     protected void toast(String msg){
         ToastUtil.showAtCenter(getContext(),msg);

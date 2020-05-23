@@ -1,6 +1,7 @@
 package com.learn.mvc.glide;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.annotation.IntDef;
 import android.text.TextUtils;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class GlideHelper {
     private int width,height;//设置宽高
     private boolean fitCenter = false;
     private boolean isGif = false;
+    private boolean crossFade = false;//淡入淡出效果
     public GlideHelper(Builder builder) {
         this.palceholder = builder.palceholder;
         this.error = builder.error;
@@ -40,6 +42,7 @@ public class GlideHelper {
         this.height = builder.height;
         this.fitCenter = builder.fitCenter;
         this.isGif = builder.isGif;
+        this.crossFade = builder.crossFade;
     }
 
     public static class Builder{
@@ -51,6 +54,7 @@ public class GlideHelper {
         private int width,height;
         private boolean fitCenter;
         private boolean isGif;
+        private boolean crossFade;
 
         public Builder setPalceholder(int palceholder) {
             this.palceholder = palceholder;
@@ -95,6 +99,10 @@ public class GlideHelper {
             this.isGif = true;
             return this;
         }
+        public Builder crossFade() {
+            this.crossFade = true;
+            return this;
+        }
 
         public GlideHelper build(){
             return new GlideHelper(this);
@@ -109,6 +117,7 @@ public class GlideHelper {
             if (isDiskCache) load.diskCacheStrategy(DiskCacheStrategy.SOURCE);
             if (width!=0&&height!=0)load.override(width, height);
             if (fitCenter) load.fitCenter();
+            if (crossFade)load.crossFade();
             switch (type){
                 case ROUND:
                     load.transform(new GlideRoundTransform(context,roundingRadius));
@@ -124,6 +133,36 @@ public class GlideHelper {
         }
     }
 
+    /**
+     * 加载本地静态图资源 不存在占位图说法  效果不理想,不推荐使用
+     * @param context
+     * @param resId
+     * @param imageView
+     * @param type
+     */
+    @Deprecated
+    public void load(Context context, int resId, ImageView imageView, @Type int type) {
+        if (null != context) {
+            DrawableTypeRequest<Integer> load = Glide.with(context).load(resId);
+            if (isGif) load.asGif();
+            if (isDiskCache) load.diskCacheStrategy(DiskCacheStrategy.SOURCE);
+            if (width!=0&&height!=0)load.override(width, height);
+            if (fitCenter) load.fitCenter();
+            if (crossFade)load.crossFade();
+            switch (type){
+                case ROUND:
+                    load.transform(new GlideRoundTransform(context,roundingRadius));
+                    break;
+                case CIRCLE:
+                    load.transform(new GlideCircleTransform(context));
+                    break;
+                case NONE:
+                default:
+                    break;
+            }
+            load.into(imageView);
+        }
+    }
     /**
      * 对线上资源为空判断
      * @param url
