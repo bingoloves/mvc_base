@@ -1,12 +1,15 @@
 package com.learn.mvc.fragment;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import com.learn.base.fragment.BaseFragment;
 import com.learn.base.utils.DateUtils;
 import com.learn.base.utils.LogUtils;
 import com.learn.base.utils.StringUtil;
+import com.learn.dialog.IDialog;
+import com.learn.dialog.SuperDialog;
 import com.learn.multistate.MultistateLayout;
 import com.learn.mvc.R;
 import com.learn.mvc.glide.GlideHelper;
@@ -30,7 +33,7 @@ public class Fragment1 extends BaseFragment{
     @BindView(R.id.multistate_layout)
     MultistateLayout multistateLayout;
     @OnClick({R.id.moveQiNiu,R.id.succeed_tv,R.id.net_tv,R.id.loading_tv,R.id.data_tv, R.id.crash_btn,
-            R.id.image1_tv,R.id.image2_tv,R.id.image3_tv,R.id.image4_tv
+            R.id.image1_tv,R.id.image2_tv,R.id.image3_tv,R.id.image4_tv,R.id.dialog_tv
     })
     public void clickEvent(View view){
         switch (view.getId()){
@@ -85,6 +88,9 @@ public class Fragment1 extends BaseFragment{
                         .build()
                         .load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
                 break;
+            case R.id.dialog_tv:
+                showDialog();
+                break;
         }
     }
     @Override
@@ -107,6 +113,24 @@ public class Fragment1 extends BaseFragment{
         });
     }
 
+    /**
+     * 显示dialog
+     */
+    private void showDialog(){
+        new SuperDialog.Builder(getContext())
+                .setTitle("我是标题")
+//                .setDialogView(R.layout.layout_custom_dialog)
+//                .setFullScreenWidth()
+                .setAnimStyle(R.style.dialog_modal)
+                .setContent("您好,我们将在30分钟处理，稍后通知您订单结果！")
+                .setPositiveButton(new IDialog.OnClickListener() {
+                    @Override
+                    public void onClick(IDialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
     @Override
     protected void lazyLoad() {
 

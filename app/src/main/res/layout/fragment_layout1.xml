@@ -82,6 +82,16 @@
             android:layout_height="wrap_content"
             android:text="中心裁剪" />
     </LinearLayout>
+    <!--dialog-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/dialog_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="弹窗"/>
+    </LinearLayout>
     <com.learn.multistate.MultistateLayout
         android:id="@+id/multistate_layout"
         android:layout_width="match_parent"

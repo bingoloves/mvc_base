@@ -26,4 +26,9 @@
         <item name="android:textColor">#FF666666</item>
         <item name="android:textSize">10sp</item>
     </style>
+    <!--测试dilog anim-->
+    <style name="dialog_modal" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/modal_in</item>
+        <item name="android:windowExitAnimation">@anim/modal_out</item>
+    </style>
 </resources>

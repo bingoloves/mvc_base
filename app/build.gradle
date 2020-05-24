@@ -44,6 +44,7 @@ dependencies {
     implementation project(':gallery')
     implementation project(':photo')
     implementation project(':swipe_refresh')
+    implementation project(':dialog')
     implementation 'cn.bingoogolapple:bga-photopicker:1.2.9@aar'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.9@aar'
     implementation 'pub.devrel:easypermissions:1.0.1'
