@@ -27,7 +27,8 @@ public class Fragment1 extends BaseFragment{
             "https://cmgw-hz.lechange.com:8890/LCO/4L03F00PAZF1379/1/1/20191216T055008/dev_4L03F00PAZF1379_20191216T055008.m3u8",
             "https://cmgw-hz.lechange.com:8890/LCO/4L03F00PAZF1379/7/1/20191216T055052/dev_4L03F00PAZF1379_20191216T055052.m3u8"
     };
-    private String iamgeTest = "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg";
+    private String imageTest = "http://192.168.1.112:9100/fast/viewFile?token=1b5bc2624a31db8d957291e06c3e1637&stamp=1&path=group1/M01/00/0A/wKgB5l6-LHyAd-XPAAAe92plnEc850.jpg";
+    //private String iamgeTest = "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3252521864,872614242&fm=26&gp=0.jpg";
     @BindView(R.id.test_iv)
     ImageView testIv;
     @BindView(R.id.multistate_layout)
@@ -60,33 +61,35 @@ public class Fragment1 extends BaseFragment{
                 Integer.parseInt("goldze");
                 break;
             case R.id.image1_tv:
-                new GlideHelper.Builder().crossFade().build().load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
+                new GlideHelper.Builder().crossFade().build().load(getContext(),imageTest,testIv);
                 break;
             case R.id.image2_tv:
                 new GlideHelper.Builder()
                         .crossFade()
+                        .setType(GlideHelper.CIRCLE)
                         .build()
-                        .load(getContext(),iamgeTest,testIv,GlideHelper.CIRCLE);
+                        .load(getContext(),imageTest,testIv);
                 break;
             case R.id.image3_tv:
                 new GlideHelper.Builder()
                         .crossFade()
+                        .setType(GlideHelper.ROUND)
                         .setRoundingRadius(16)
                         .build()
-                        .load(getContext(),iamgeTest,testIv,GlideHelper.ROUND);
+                        .load(getContext(),imageTest,testIv);
 //                new GlideHelper.Builder()
 //                        .crossFade()
 //                        .fitCenter()
 //                        .setRoundingRadius(16)
 //                        .build()
-//                        .load(getContext(),R.drawable.em_splash,testIv,GlideHelper.ROUND);
+//                        .load(getContext(),R.drawable.em_splash,testIv);
                 break;
             case R.id.image4_tv:
                 new GlideHelper.Builder()
                         .fitCenter()
                         .crossFade()
                         .build()
-                        .load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
+                        .load(getContext(),imageTest,testIv);
                 break;
             case R.id.dialog_tv:
                 showDialog();
@@ -101,10 +104,7 @@ public class Fragment1 extends BaseFragment{
     @Override
     protected void initView(View root) {
         multistateLayout.setStatus(MultistateLayout.SUCCESS);
-        new GlideHelper.Builder().build().load(getContext(),iamgeTest,testIv,GlideHelper.NONE);
-//        Date dayBegin = DateUtils.getDayBegin();
-//        Date dayEnd = DateUtils.getDayEnd();
-//        LogUtils.getInstance().e(dayBegin.getTime()+"------"+dayEnd.getTime());
+        new GlideHelper.Builder().build().load(getContext(),imageTest,testIv);
         multistateLayout.setOnReloadListener(new MultistateLayout.OnReloadListener() {
             @Override
             public void onReload(View v, int status) {

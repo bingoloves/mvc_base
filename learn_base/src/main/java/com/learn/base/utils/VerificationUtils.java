@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  * https://github.com/sharinghuang/ASRabbit/blob/7350ea1c212946633316d36760c7088728dc2730/baselib/src/main/java/com/ht/baselib/utils/FormatVerificationUtils.java
  */
 public class VerificationUtils {
+
     public static boolean matcherRealName(String value) {
         String regex = "^([\\u4e00-\\u9fa5]+|([a-zA-Z]+\\s?)+)$";
         return testRegex(regex, value);

@@ -32,6 +32,7 @@ public class GlideHelper {
     private boolean fitCenter = false;
     private boolean isGif = false;
     private boolean crossFade = false;//淡入淡出效果
+
     public GlideHelper(Builder builder) {
         this.palceholder = builder.palceholder;
         this.error = builder.error;
@@ -55,7 +56,6 @@ public class GlideHelper {
         private boolean fitCenter;
         private boolean isGif;
         private boolean crossFade;
-
         public Builder setPalceholder(int palceholder) {
             this.palceholder = palceholder;
             return this;
@@ -108,14 +108,15 @@ public class GlideHelper {
             return new GlideHelper(this);
         }
     }
-    public void load(Context context, String url, ImageView imageView,@Type int type) {
+
+    public void load(Context context, String path, ImageView imageView) {
         if (null != context) {
-            DrawableTypeRequest<String> load = Glide.with(context).load(getLoadPath(url));
-            if (palceholder!=-1) load.placeholder(palceholder);
-            if (error!=-1) load.placeholder(error);
+            DrawableTypeRequest<String> load = Glide.with(context).load(getLoadPath(path));
+            if (palceholder != -1) load.placeholder(palceholder);
+            if (error != -1) load.placeholder(error);
             if (isGif) load.asGif();
             if (isDiskCache) load.diskCacheStrategy(DiskCacheStrategy.SOURCE);
-            if (width!=0&&height!=0)load.override(width, height);
+            if (width!=0 && height!=0)load.override(width, height);
             if (fitCenter) load.fitCenter();
             if (crossFade)load.crossFade();
             switch (type){
@@ -138,10 +139,9 @@ public class GlideHelper {
      * @param context
      * @param resId
      * @param imageView
-     * @param type
      */
     @Deprecated
-    public void load(Context context, int resId, ImageView imageView, @Type int type) {
+    public void load(Context context, int resId, ImageView imageView) {
         if (null != context) {
             DrawableTypeRequest<Integer> load = Glide.with(context).load(resId);
             if (isGif) load.asGif();
