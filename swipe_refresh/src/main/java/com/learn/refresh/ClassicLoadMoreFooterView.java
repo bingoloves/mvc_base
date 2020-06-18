@@ -70,6 +70,7 @@ public class ClassicLoadMoreFooterView extends SwipeLoadMoreFooterLayout {
     @Override
     public void onComplete() {
         progressBar.setVisibility(GONE);
+        tvLoadMore.setText("加载完成");
         ivSuccess.setVisibility(VISIBLE);
     }
 

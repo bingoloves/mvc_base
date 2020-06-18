@@ -112,7 +112,11 @@ public class Fragment1 extends BaseFragment{
             }
         });
     }
-
+    @Override
+    protected void refreshLoad() {
+        super.refreshLoad();
+        toast("页面切换到1");
+    }
     /**
      * 显示dialog
      */

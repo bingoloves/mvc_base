@@ -7,6 +7,7 @@ import android.view.View;
 import com.learn.base.adapter.recyclerview.CommonAdapter;
 import com.learn.base.adapter.recyclerview.base.ViewHolder;
 import com.learn.base.fragment.BaseFragment;
+import com.learn.base.utils.LogUtils;
 import com.learn.mvc.R;
 import com.learn.refresh.OnLoadMoreListener;
 import com.learn.refresh.OnRefreshListener;
@@ -66,7 +67,13 @@ public class Fragment5 extends BaseFragment implements OnLoadMoreListener, OnRef
 
     @Override
     protected void lazyLoad() {
+        LogUtils.getInstance().e("lazyLoad");
+    }
 
+    @Override
+    protected void refreshLoad() {
+        super.refreshLoad();
+        toast("页面切换到5");
     }
 
     @Override

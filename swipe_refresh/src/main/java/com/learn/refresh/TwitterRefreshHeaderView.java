@@ -49,7 +49,6 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-
         tvRefresh = (TextView) findViewById(R.id.tvRefresh);
         ivArrow = (ImageView) findViewById(R.id.ivArrow);
         ivSuccess = (ImageView) findViewById(R.id.ivSuccess);
@@ -58,9 +57,9 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
 
     @Override
     public void onRefresh() {
-        ivSuccess.setVisibility(GONE);
+        ivSuccess.setVisibility(INVISIBLE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
+        ivArrow.setVisibility(INVISIBLE);
         progressBar.setVisibility(VISIBLE);
         tvRefresh.setText("正在刷新...");
     }
@@ -74,8 +73,8 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
     public void onMove(int y, boolean isComplete, boolean automatic) {
         if (!isComplete) {
             ivArrow.setVisibility(VISIBLE);
-            progressBar.setVisibility(GONE);
-            ivSuccess.setVisibility(GONE);
+            progressBar.setVisibility(INVISIBLE);
+            ivSuccess.setVisibility(INVISIBLE);
             if (y > mHeaderHeight) {
                 tvRefresh.setText("释放立即刷新");
                 if (!rotated) {
@@ -89,7 +88,6 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
                     ivArrow.startAnimation(rotateDown);
                     rotated = false;
                 }
-
                 tvRefresh.setText("SWIPE TO REFRESH");
             }
         }
@@ -105,18 +103,18 @@ public class TwitterRefreshHeaderView extends SwipeRefreshHeaderLayout {
         rotated = false;
         ivSuccess.setVisibility(VISIBLE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
-        progressBar.setVisibility(GONE);
+        ivArrow.setVisibility(INVISIBLE);
+        progressBar.setVisibility(INVISIBLE);
         tvRefresh.setText("刷新成功");
     }
 
     @Override
     public void onReset() {
         rotated = false;
-        ivSuccess.setVisibility(GONE);
+        ivSuccess.setVisibility(INVISIBLE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
-        progressBar.setVisibility(GONE);
+        ivArrow.setVisibility(INVISIBLE);
+        progressBar.setVisibility(INVISIBLE);
     }
 
 }

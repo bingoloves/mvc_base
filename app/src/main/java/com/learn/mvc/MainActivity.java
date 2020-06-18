@@ -87,7 +87,6 @@ public class MainActivity extends BaseActivity {
                 currentIndex = 4;
                 break;
         }
-        toast(currentIndex+"");
         showFragment();
         updateTabs(currentIndex);
     }
